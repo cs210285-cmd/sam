@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans TC', sans-serif; background: #fff; color: #111; padding: 32px 28px; font-size: 13px; }
+  h1 { font-size: 20px; font-weight: 700; color: #111; margin-bottom: 4px; }
+  .subtitle { font-size: 12px; color: #6B7280; margin-bottom: 28px; }
+
+  .scene { margin-bottom: 36px; page-break-inside: avoid; }
+  .scene-ep { font-size: 10px; font-weight: 500; color: #9CA3AF; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 3px; }
+  .scene-ttl { font-size: 14px; font-weight: 700; color: #111; margin-bottom: 12px; }
+
+  .phone-wrap { width: 300px; margin: 0 auto; background: #E5E7EB; border-radius: 24px; padding: 7px; border: 1.5px solid #D1D5DB; }
+  .phone-screen { border-radius: 18px; overflow: hidden; background: #fff; border: 0.5px solid #E5E7EB; }
+
+  .tc { font-size: 9px; color: #9CA3AF; text-align: center; padding: 4px 0; background: #F9FAFB; border-bottom: 0.5px solid #F3F4F6; }
+  .split { display: flex; min-height: 260px; }
+  .h-left { flex: 1; border-right: 1px solid #E5E7EB; }
+  .h-right { flex: 1; }
+  .hdr { padding: 6px 8px; }
+  .hdr-l { background: #FEF2F2; border-bottom: 0.5px solid #FECACA; }
+  .hdr-r { background: #F0FDF4; border-bottom: 0.5px solid #BBF7D0; }
+  .badge { font-size: 9px; font-weight: 700; padding: 2px 8px; border-radius: 20px; }
+  .bd-bad { background: #FEE2E2; color: #991B1B; }
+  .bd-good { background: #DCFCE7; color: #166534; }
+
+  .body { padding: 12px 8px; display: flex; flex-direction: column; align-items: center; gap: 8px; min-height: 200px; justify-content: center; }
+  .body-l { background: #FFFBFB; }
+  .body-r { background: #F8FFF9; }
+
+  .ic { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+  .ic-bad { background: #FEE2E2; }
+  .ic-good { background: #DCFCE7; }
+
+  .desc { font-size: 10px; text-align: center; line-height: 1.6; }
+  .desc-bad { color: #991B1B; }
+  .desc-good { color: #166534; }
+
+  .bbl { font-size: 9px; padding: 5px 8px; line-height: 1.4; text-align: center; max-width: 110px; }
+  .bbl-bad { background: #FEE2E2; color: #7F1D1D; border-radius: 8px 8px 0 8px; }
+  .bbl-good { background: #DCFCE7; color: #14532D; border-radius: 8px 8px 8px 0; }
+
+  .foot { display: flex; justify-content: space-between; background: #F9FAFB; border-top: 0.5px solid #F3F4F6; padding: 5px 10px; }
+  .ft-bad { font-size: 9px; font-weight: 700; color: #DC2626; }
+  .ft-good { font-size: 9px; font-weight: 700; color: #16A34A; }
+
+  .notes { display: flex; gap: 8px; margin-top: 10px; }
+  .note { flex: 1; background: #F9FAFB; border-radius: 8px; padding: 8px 10px; border: 0.5px solid #E5E7EB; }
+  .note-lbl { font-size: 10px; font-weight: 700; margin-bottom: 3px; }
+  .note-lbl-bad { color: #A32D2D; }
+  .note-lbl-good { color: #0F6E56; }
+  .note-txt { font-size: 10px; color: #374151; line-height: 1.5; }
+
+  .step-row { display: flex; flex-direction: column; gap: 3px; width: 100%; }
+  .step-bad { background: #FEF2F2; border-radius: 4px; padding: 4px 6px; font-size: 9px; color: #7F1D1D; line-height: 1.5; text-align: center; }
+  .step-good { background: #F0FDF4; border-radius: 4px; padding: 4px 6px; font-size: 9px; color: #14532D; line-height: 1.5; text-align: center; }
+
+  .tag-row { display: flex; flex-direction: column; gap: 3px; width: 100%; }
+  .tag-g { background: #F0FDF4; border-radius: 4px; padding: 4px 6px; font-size: 9px; color: #14532D; text-align: center; }
+
+  .num-sm { font-size: 10px; color: #6B7280; margin-bottom: 2px; }
+  .num-big-bad { font-size: 22px; font-weight: 700; color: #DC2626; }
+  .num-big-good { font-size: 18px; font-weight: 700; color: #16A34A; }
+  .num-md { font-size: 13px; color: #16A34A; font-weight: 500; }
+
+  .cta-bar { background: #F0FDF4; border-top: 0.5px solid #BBF7D0; padding: 7px; text-align: center; font-size: 10px; color: #166534; font-weight: 700; }
+
+  .pill-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .pill { font-size: 10px; padding: 2px 9px; border-radius: 20px; border: 0.5px solid #D1D5DB; color: #6B7280; background: #fff; }
+
+  .divider { border: none; border-top: 1px solid #F3F4F6; margin: 28px 0; }
+</style>
+</head>
+<body>
+
+<h1>uTagGo 分割畫面分鏡腳本</h1>
+<p class="subtitle">左側：傳統車商情境　｜　右側：uTagGo 平台情境　｜　共 5 場景</p>
+
+<!-- SCENE 1 -->
+<div class="scene">
+  <div class="scene-ep">Scene 01 · 0–5 秒</div>
+  <div class="scene-ttl">開場｜痛點鉤子</div>
+  <div class="phone-wrap">
+    <div class="phone-screen">
+      <div class="tc">00:00 – 00:05</div>
+      <div class="split">
+        <div class="h-left">
+          <div class="hdr hdr-l"><span class="badge bd-bad">傳統車商</span></div>
+          <div class="body body-l">
+            <div class="ic ic-bad">😩</div>
+            <div class="desc desc-bad">車主站在車旁<br/>一臉無奈</div>
+            <div class="bbl bbl-bad">「問了三家⋯⋯每家出價都不一樣」</div>
+          </div>
+        </div>
+        <div class="h-right">
+          <div class="hdr hdr-r"><span class="badge bd-good">uTagGo</span></div>
+          <div class="body body-r">
+            <div class="ic ic-good">📱</div>
+            <div class="desc desc-good">車主輕鬆拿手機<br/>在停車場</div>
+            <div class="bbl bbl-good">「用 uTagGo，就近搞定」</div>
+          </div>
+        </div>
+      </div>
+      <div class="foot">
+        <span class="ft-bad">焦慮 · 壓迫感</span>
+        <span class="ft-good">輕鬆 · 掌控感</span>
+      </div>
+    </div>
+  </div>
+  <div class="notes">
+    <div class="note">
+      <div class="note-lbl note-lbl-bad">左側拍攝提示</div>
+      <div class="note-txt">冷色調、陰天或暗光，車主眉頭緊皺，肢體略顯疲憊</div>
+    </div>
+    <div class="note">
+      <div class="note-lbl note-lbl-good">右側拍攝提示</div>
+      <div class="note-txt">暖白光、晴天停車場，車主神情放鬆，手持手機自然滑動</div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- SCENE 2 -->
+<div class="scene">
+  <div class="scene-ep">Scene 02 · 6–20 秒</div>
+  <div class="scene-ttl">衝突｜傳統收購 vs. uTagGo 流程</div>
+  <div class="phone-wrap">
+    <div class="phone-screen">
+      <div class="tc">00:06 – 00:20</div>
+      <div class="split">
+        <div class="h-left">
+          <div class="hdr hdr-l"><span class="badge bd-bad">傳統車商</span></div>
+          <div class="body body-l">
+            <div class="step-row">
+              <div class="step-bad">① 車主自行聯絡多家車商</div>
+              <div class="step-bad">② 車商逐步壓低出價</div>
+              <div class="step-bad">③ 來回議價、耗時費神</div>
+              <div class="step-bad">④ 被動接受低價成交</div>
+            </div>
+            <div class="bbl bbl-bad" style="margin-top:6px;">差價進了車商口袋</div>
+          </div>
+        </div>
+        <div class="h-right">
+          <div class="hdr hdr-r"><span class="badge bd-good">uTagGo</span></div>
+          <div class="body body-r">
+            <div class="step-row">
+              <div class="step-good">① 線上填資料、就近勘車</div>
+              <div class="step-good">② 平台給出保底收購價</div>
+              <div class="step-good">③ 送拍賣、多家競標</div>
+              <div class="step-good">④ 賣高差價回饋車主</div>
+            </div>
+            <div class="bbl bbl-good" style="margin-top:6px;">差價分潤給你</div>
+          </div>
+        </div>
+      </div>
+      <div class="foot">
+        <span class="ft-bad">車商獲益</span>
+        <span class="ft-good">車主獲益</span>
+      </div>
+    </div>
+  </div>
+  <div class="notes">
+    <div class="note">
+      <div class="note-lbl note-lbl-bad">左側拍攝提示</div>
+      <div class="note-txt">快速剪接：車商搖頭→車主盯著數字發愁→漫長等待空鏡</div>
+    </div>
+    <div class="note">
+      <div class="note-lbl note-lbl-good">右側拍攝提示</div>
+      <div class="note-txt">手機介面特寫→勘車人員到場→拍賣競標動態畫面</div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- SCENE 3 -->
+<div class="scene">
+  <div class="scene-ep">Scene 03 · 21–45 秒</div>
+  <div class="scene-ttl">核心｜保底 + 分潤機制說明</div>
+  <div class="phone-wrap">
+    <div class="phone-screen">
+      <div class="tc">00:21 – 00:45</div>
+      <div class="split">
+        <div class="h-left">
+          <div class="hdr hdr-l"><span class="badge bd-bad">傳統車商</span></div>
+          <div class="body body-l">
+            <div class="ic ic-bad">💸</div>
+            <div class="desc desc-bad">收購價 = 車商利潤空間<br/>你只能拿到最低價</div>
+            <div style="background:#FEE2E2; border-radius:6px; padding:6px 8px; font-size:9px; color:#7F1D1D; text-align:center; line-height:1.5; margin-top:4px;">
+              賠了？車商承擔<br/>賺了？跟你無關
+            </div>
+          </div>
+        </div>
+        <div class="h-right">
+          <div class="hdr hdr-r"><span class="badge bd-good">uTagGo</span></div>
+          <div class="body body-r">
+            <div class="ic ic-good">🛡️</div>
+            <div class="desc desc-good">保底價先保障你<br/>拍賣賣更高再分潤</div>
+            <div class="tag-row" style="margin-top:4px;">
+              <div class="tag-g">✓ 保底收購價 → 你的底線</div>
+              <div class="tag-g">✓ 拍賣溢價 → 差價分潤</div>
+              <div class="tag-g">✓ 損失由平台負責</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="foot">
+        <span class="ft-bad">資訊不透明</span>
+        <span class="ft-good">機制透明 · 有保障</span>
+      </div>
+    </div>
+  </div>
+  <div class="notes">
+    <div class="note">
+      <div class="note-lbl note-lbl-bad">左側拍攝提示</div>
+      <div class="note-txt">車商拿計算機核算，車主看不到螢幕，象徵資訊不透明</div>
+    </div>
+    <div class="note">
+      <div class="note-lbl note-lbl-good">右側拍攝提示</div>
+      <div class="note-txt">手寫風動態字卡逐行出現：「保底」→「競標」→「分潤」</div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- SCENE 4 -->
+<div class="scene">
+  <div class="scene-ep">Scene 04 · 46–65 秒</div>
+  <div class="scene-ttl">結果｜實際案例數字對比</div>
+  <div class="phone-wrap">
+    <div class="phone-screen">
+      <div class="tc">00:46 – 01:05</div>
+      <div class="split">
+        <div class="h-left">
+          <div class="hdr hdr-l"><span class="badge bd-bad">傳統車商</span></div>
+          <div class="body body-l">
+            <div class="num-sm">車主最終入帳</div>
+            <div class="num-big-bad">$280,000</div>
+            <div class="num-sm" style="margin-top:8px;">車商實際成交</div>
+            <div style="font-size:13px; color:#6B7280; font-weight:500;">$330,000</div>
+            <div style="margin-top:8px; font-size:9px; color:#DC2626; background:#FEE2E2; border-radius:5px; padding:4px 8px;">差價 $50,000 歸車商</div>
+          </div>
+        </div>
+        <div class="h-right">
+          <div class="hdr hdr-r"><span class="badge bd-good">uTagGo</span></div>
+          <div class="body body-r">
+            <div class="num-sm">保底收購價</div>
+            <div class="num-md">$300,000</div>
+            <div class="num-sm" style="margin-top:6px;">拍賣成交價</div>
+            <div class="num-md">$340,000</div>
+            <div style="margin-top:8px; background:#DCFCE7; border-radius:6px; padding:6px 10px; text-align:center;">
+              <div style="font-size:8px; color:#166534; font-weight:500;">分潤回饋車主</div>
+              <div class="num-big-good">+$20,000</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="foot">
+        <span class="ft-bad">少拿了 $5 萬</span>
+        <span class="ft-good">多拿了 $2 萬</span>
+      </div>
+    </div>
+  </div>
+  <div class="notes">
+    <div class="note">
+      <div class="note-lbl note-lbl-bad">左側拍攝提示</div>
+      <div class="note-txt">紅色字卡帶出數字，旁白說明差價流向，語氣帶點惋惜</div>
+    </div>
+    <div class="note">
+      <div class="note-lbl note-lbl-good">右側拍攝提示</div>
+      <div class="note-txt">綠色數字卡片逐步疊加，「+$20,000」放大特寫，加入轉帳通知音效</div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- SCENE 5 -->
+<div class="scene">
+  <div class="scene-ep">Scene 05 · 66–80 秒</div>
+  <div class="scene-ttl">結尾｜CTA 行動呼籲</div>
+  <div class="phone-wrap">
+    <div class="phone-screen">
+      <div class="tc">01:06 – 01:20</div>
+      <div class="split">
+        <div class="h-left">
+          <div class="hdr hdr-l"><span class="badge bd-bad">傳統車商</span></div>
+          <div class="body body-l">
+            <div class="ic ic-bad">😞</div>
+            <div class="desc desc-bad">低價成交<br/>後悔沒多問</div>
+          </div>
+        </div>
+        <div class="h-right">
+          <div class="hdr hdr-r"><span class="badge bd-good">uTagGo</span></div>
+          <div class="body body-r">
+            <div class="ic ic-good">😊</div>
+            <div class="desc desc-good">車主微笑對鏡頭<br/>輕鬆收尾</div>
+            <div style="margin-top:8px; background:#DCFCE7; border-radius:7px; padding:6px 10px; font-size:9px; color:#14532D; text-align:center; line-height:1.6;">
+              賣車就找 uTagGo<br/>保底起跳，賣高一起分
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="cta-bar">立即估價 → uTagGo 官網 / 掃碼</div>
+    </div>
+  </div>
+  <div class="pill-row">
+    <div class="pill">全程字幕</div>
+    <div class="pill">左暖紅右清綠色調對比</div>
+    <div class="pill">前段緊張 BGM</div>
+    <div class="pill">後段輕快音樂</div>
+    <div class="pill">無聲可讀</div>
+  </div>
+</div>
+
+</body>
+</html>
