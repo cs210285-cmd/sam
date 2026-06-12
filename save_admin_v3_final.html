@@ -1,0 +1,789 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.shell{display:flex;flex-direction:column;height:680px;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden;font-size:12px;background:#fff}
+.roletabs{display:flex;background:#fff;border-bottom:0.5px solid var(--color-border-tertiary);flex-shrink:0}
+.rtab{flex:1;padding:9px 0;font-size:12px;font-weight:500;border:none;background:transparent;cursor:pointer;color:var(--color-text-secondary);border-bottom:2px solid transparent}
+.rtab.on{color:#0F6E56;border-bottom-color:#1D9E75}
+.body{display:flex;flex:1;overflow:hidden}
+.sb{width:176px;flex-shrink:0;background:#fff;border-right:0.5px solid var(--color-border-tertiary);display:flex;flex-direction:column;overflow-y:auto}
+.sb-logo{padding:12px 14px 10px;border-bottom:0.5px solid var(--color-border-tertiary)}
+.sb-logo-m{font-size:12px;font-weight:500;color:var(--color-text-primary)}
+.sb-logo-s{font-size:11px;color:var(--color-text-tertiary);margin-top:2px}
+.sb-sec{padding:12px 14px 3px;font-size:11px;color:var(--color-text-tertiary);letter-spacing:.05em}
+.ni{padding:7px 14px;font-size:11px;color:var(--color-text-secondary);cursor:pointer;border-left:2px solid transparent;display:flex;align-items:center;gap:6px}
+.ni:hover{background:#f8f9fa}
+.ni.on{color:#0F6E56;border-left-color:#1D9E75;background:#f2faf6;font-weight:500}
+.ni .b{margin-left:auto;background:#E1F5EE;color:#0F6E56;border-radius:10px;padding:1px 6px;font-size:10px;font-weight:500}
+.ni .ba{margin-left:auto;background:#FAEEDA;color:#854F0B;border-radius:10px;padding:1px 6px;font-size:10px;font-weight:500}
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
+.tb{padding:9px 16px;border-bottom:0.5px solid var(--color-border-tertiary);display:flex;align-items:center;justify-content:space-between;background:#fff;flex-shrink:0;gap:8px}
+.tb-t{font-size:13px;font-weight:500;color:var(--color-text-primary)}
+.tb-r{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.ct{flex:1;overflow-y:auto;padding:14px 16px;background:#f5f7f9}
+.pg{display:none}.pg.on{display:block}
+.stats{display:grid;gap:8px;margin-bottom:12px}
+.s5{grid-template-columns:repeat(5,minmax(0,1fr))}.s4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.sc{background:#fff;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:10px 12px}
+.sc-l{font-size:11px;color:var(--color-text-tertiary);margin-bottom:3px}
+.sc-v{font-size:18px;font-weight:500;color:var(--color-text-primary)}
+.tw{background:#fff;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);overflow:hidden;margin-bottom:12px}
+table{width:100%;border-collapse:collapse;font-size:11px}
+th{background:#f0f2f5;padding:7px 9px;text-align:left;color:var(--color-text-secondary);font-weight:500;border-bottom:0.5px solid var(--color-border-tertiary);white-space:nowrap}
+td{padding:6px 9px;border-bottom:0.5px solid #eef0f3;color:var(--color-text-primary);vertical-align:middle;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#fafbfc}
+.ops{display:flex;gap:3px}
+.pill{display:inline-block;font-size:10px;padding:2px 7px;border-radius:10px;font-weight:500;white-space:nowrap}
+.p-amb{background:#FAEEDA;color:#854F0B}
+.p-blu{background:#E6F1FB;color:#185FA5}
+.p-tel{background:#E1F5EE;color:#0F6E56}
+.p-gry{background:#F1EFE8;color:#5F5E5A}
+.p-red{background:#FCEBEB;color:#A32D2D}
+.p-grn{background:#EAF3DE;color:#3B6D11}
+.p-pur{background:#EEEDFE;color:#3C3489}
+.src-s{display:inline-block;background:#E6F1FB;color:#185FA5;padding:1px 6px;border-radius:8px;font-size:10px;font-weight:500}
+.src-u{display:inline-block;background:#EEEDFE;color:#3C3489;padding:1px 6px;border-radius:8px;font-size:10px;font-weight:500}
+.src-w{display:inline-block;background:#E1F5EE;color:#0F6E56;padding:1px 6px;border-radius:8px;font-size:10px;font-weight:500}
+.src-t{display:inline-block;background:#F1EFE8;color:#5F5E5A;padding:1px 6px;border-radius:8px;font-size:10px;font-weight:500}
+button{font-size:11px;padding:4px 10px;border:0.5px solid var(--color-border-secondary);border-radius:6px;background:#fff;color:var(--color-text-primary);cursor:pointer;white-space:nowrap}
+button:hover{background:#f5f7f9}
+.bp{background:#1D9E75;color:#fff;border-color:#1D9E75}
+.bp:hover{background:#0F6E56}
+.bgt{background:#1D9E75;color:#fff;border-color:#1D9E75;font-size:11px;padding:4px 10px;border-radius:6px;cursor:pointer;white-space:nowrap}
+.bgt:hover{background:#0F6E56}
+.bred{background:#FCEBEB;color:#A32D2D;border:0.5px solid #F09595;font-size:11px;padding:4px 10px;border-radius:6px;cursor:pointer;white-space:nowrap}
+.bpur{background:#EEEDFE;color:#3C3489;border:0.5px solid #AFA9EC;font-size:11px;padding:4px 10px;border-radius:6px;cursor:pointer;white-space:nowrap}
+.bamb{background:#FAEEDA;color:#854F0B;border:0.5px solid #FAC775;font-size:11px;padding:4px 10px;border-radius:6px;cursor:pointer;white-space:nowrap}
+.fr{display:flex;gap:6px;margin-bottom:10px;align-items:center;flex-wrap:wrap}
+.fr select,.fr input{font-size:11px;padding:4px 7px;border:0.5px solid var(--color-border-secondary);border-radius:6px;background:#fff;color:var(--color-text-primary)}
+.nt{border-radius:6px;padding:8px 11px;font-size:11px;margin-bottom:10px;line-height:1.5}
+.nt-tel{background:#EFF9F5;border:0.5px solid #9FE1CB;color:#085041}
+.nt-amb{background:#FFFBEA;border:0.5px solid #F9E08A;color:#7A4C00}
+.nt-blu{background:#EEF5FD;border:0.5px solid #B5D4F4;color:#0C447C}
+.nt-red{background:#FCEBEB;border:0.5px solid #F09595;color:#A32D2D}
+.blk{background:#fff;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:12px 14px;margin-bottom:10px}
+.blk-t{font-size:12px;font-weight:500;color:var(--color-text-primary);border-bottom:0.5px solid var(--color-border-tertiary);padding-bottom:7px;margin-bottom:9px;display:flex;align-items:center;justify-content:space-between}
+.fg{display:flex;flex-direction:column;gap:3px;margin-bottom:7px}
+.fl{font-size:11px;color:var(--color-text-secondary)}
+.fi{padding:5px 8px;border:0.5px solid var(--color-border-secondary);border-radius:5px;font-size:11px;background:#fff;color:var(--color-text-primary)}
+.fi:focus{outline:none;border-color:#1D9E75}
+.fs{padding:5px 8px;border:0.5px solid var(--color-border-secondary);border-radius:5px;font-size:11px;background:#fff;color:var(--color-text-primary)}
+.gr{display:grid;gap:8px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.br{display:flex;align-items:center;gap:7px;padding:8px 11px;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);margin-bottom:5px;background:#fff}
+.br.win{border-color:#1D9E75;background:#f0faf6}
+.br.aban{border-color:#A32D2D;background:#FCEBEB}
+.rk{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;flex-shrink:0}
+.rk1{background:#FAEEDA;color:#854F0B}.rk2{background:#F1EFE8;color:#5F5E5A}
+.bi{flex:1;min-width:0}
+.bn{font-size:11px;font-weight:500;color:var(--color-text-primary)}
+.bm{font-size:10px;color:var(--color-text-tertiary)}
+.bp2{font-size:13px;font-weight:500;color:#185FA5;white-space:nowrap}
+.tc{display:flex;flex-direction:column}
+.ti{display:flex;gap:9px;padding-bottom:9px;position:relative}
+.td2{width:7px;height:7px;border-radius:50%;margin-top:3px;flex-shrink:0}
+.tdn{background:#1D9E75}.tac{background:#185FA5}.tpd{background:var(--color-border-tertiary)}
+.tln{position:absolute;left:3px;top:10px;bottom:0;width:1px;background:var(--color-border-tertiary)}
+.tt{font-size:11px;font-weight:500;color:var(--color-text-primary)}
+.tm{font-size:10px;color:var(--color-text-tertiary)}
+.sms{background:#EEF5FD;border:0.5px solid #B5D4F4;border-radius:var(--border-radius-md);padding:9px 12px;font-size:11px;color:#0C447C;margin-bottom:10px;line-height:1.5}
+.lg{background:#f5f7f9;border-radius:5px;padding:8px 10px;font-size:10px;color:var(--color-text-secondary);border:0.5px solid var(--color-border-tertiary)}
+.pgr{display:flex;justify-content:space-between;align-items:center;padding:7px 10px;border-top:0.5px solid var(--color-border-tertiary);font-size:10px;color:var(--color-text-tertiary)}
+.pgb{width:20px;height:20px;border-radius:4px;border:0.5px solid var(--color-border-tertiary);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;background:#fff;font-size:10px;color:var(--color-text-secondary)}
+.pgb.on{background:#1D9E75;color:#fff;border-color:#1D9E75}
+.ib{background:#f5f7f9;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:9px 11px;font-size:11px;margin-bottom:9px}
+.cc{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:12px 14px;margin-bottom:8px;background:#fff}
+.cc-h{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px}
+.cc-t{font-size:12px;font-weight:500;color:var(--color-text-primary)}
+.cc-m{font-size:10px;color:var(--color-text-tertiary);margin-top:1px}
+.ph{border:0.5px solid var(--color-border-tertiary);border-radius:5px;height:44px;background:#f5f7f9;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--color-text-tertiary)}
+.ph.has{background:#1D9E75;color:#fff}
+.dv{border:none;border-top:0.5px solid var(--color-border-tertiary);margin:10px 0}
+/* 車商後台：帶底色的內容區 */
+.d-ct{flex:1;overflow-y:auto;padding:14px 16px;background:#EFF9F5}
+/* 卡片在綠底上更明顯 */
+.d-cc{border:0.5px solid #9FE1CB;border-radius:var(--border-radius-md);padding:12px 14px;margin-bottom:8px;background:#fff;box-shadow:0 1px 4px rgba(15,110,86,0.07)}
+.d-cc.win{border-color:#1D9E75;border-width:1.5px;background:#FAFFFD}
+.d-cc.gray{background:#fafbfc;border-color:var(--color-border-tertiary);opacity:.75}
+.d-blk{background:#fff;border:0.5px solid #9FE1CB;border-radius:var(--border-radius-md);padding:12px 14px;margin-bottom:10px;box-shadow:0 1px 4px rgba(15,110,86,0.06)}
+.d-blk-t{font-size:12px;font-weight:500;color:#085041;border-bottom:0.5px solid #9FE1CB;padding-bottom:7px;margin-bottom:9px}
+/* 上傳框 */
+.upload-box{border:1.5px dashed #9FE1CB;border-radius:var(--border-radius-md);padding:14px;text-align:center;background:#EFF9F5;cursor:pointer}
+.upload-box:hover{background:#E1F5EE;border-color:#1D9E75}
+.upload-box-label{font-size:11px;color:#0F6E56;font-weight:500;margin-bottom:3px}
+.upload-box-sub{font-size:10px;color:#9FE1CB}
+.upload-done{border:1px solid #1D9E75;border-radius:var(--border-radius-md);padding:10px 12px;background:#f0faf6;display:flex;align-items:center;gap:8px}
+.upload-done-name{font-size:11px;font-weight:500;color:#085041;flex:1}
+.upload-done-time{font-size:10px;color:#9FE1CB}
+/* 戰敗原因 radio */
+.radio-list{display:flex;flex-direction:column;gap:7px;margin-top:4px}
+.radio-item{display:flex;align-items:flex-start;gap:7px;padding:7px 10px;border:0.5px solid var(--color-border-secondary);border-radius:6px;background:#fff;cursor:pointer}
+.radio-item.sel{border-color:#1D9E75;background:#f0faf6}
+.radio-item input[type=radio]{margin-top:1px;accent-color:#1D9E75}
+.radio-item-label{font-size:11px;color:var(--color-text-primary)}
+/* 步驟指示 */
+.step-bar{display:flex;gap:0;margin-bottom:14px}
+.step{flex:1;display:flex;flex-direction:column;align-items:center;position:relative}
+.step:not(:last-child)::after{content:'';position:absolute;right:0;top:11px;width:50%;height:1px;background:var(--color-border-tertiary);z-index:0}
+.step:not(:first-child)::before{content:'';position:absolute;left:0;top:11px;width:50%;height:1px;background:var(--color-border-tertiary);z-index:0}
+.step-dot{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;z-index:1;background:#fff;border:1.5px solid var(--color-border-secondary);color:var(--color-text-tertiary)}
+.step-dot.done{background:#1D9E75;border-color:#1D9E75;color:#fff}
+.step-dot.active{background:#185FA5;border-color:#185FA5;color:#fff}
+.step-label{font-size:10px;color:var(--color-text-tertiary);margin-top:4px;text-align:center}
+.step-label.done{color:#0F6E56}.step-label.active{color:#185FA5}
+</style>
+
+<div class="shell">
+  <div class="roletabs">
+    <button class="rtab on" onclick="switchRole('admin',this)">Admin 管理後台</button>
+    <button class="rtab" onclick="switchRole('dealer',this)">車商管理後台</button>
+  </div>
+  <div class="body">
+
+    <!-- ADMIN SB -->
+    <div class="sb" id="sb-a">
+      <div class="sb-logo"><div class="sb-logo-m">SAVE Admin</div><div class="sb-logo-s">中古車收購管理系統</div></div>
+      <div class="sb-sec">案件管理</div>
+      <div class="ni on" onclick="ga('intake',this)"><i class="ti ti-file-text" aria-hidden="true"></i>進件管理<span class="b">12</span></div>
+      <div class="ni" onclick="ga('iedit',this)" style="padding-left:22px"><i class="ti ti-corner-down-right" aria-hidden="true"></i>進件編輯</div>
+      <div class="ni" onclick="ga('cases',this)"><i class="ti ti-gavel" aria-hidden="true"></i>標單管理<span class="ba">2</span></div>
+      <div class="ni" onclick="ga('match',this)"><i class="ti ti-arrows-shuffle" aria-hidden="true"></i>標單媒合</div>
+      <div class="ni" onclick="ga('rematch',this)"><i class="ti ti-refresh" aria-hidden="true"></i>再媒合</div>
+      <div class="sb-sec">勘車</div>
+      <div class="ni" onclick="ga('survey',this)"><i class="ti ti-map-pin" aria-hidden="true"></i>勘車管理</div>
+      <div class="sb-sec">車商</div>
+      <div class="ni" onclick="ga('dealer',this)"><i class="ti ti-building-store" aria-hidden="true"></i>車商管理</div>
+      <div class="sb-sec">報表</div>
+      <div class="ni" onclick="ga('report',this)"><i class="ti ti-chart-bar" aria-hidden="true"></i>結案報表</div>
+    </div>
+
+    <!-- DEALER SB -->
+    <div class="sb" id="sb-d" style="display:none">
+      <div class="sb-logo"><div class="sb-logo-m">車商後台</div><div class="sb-logo-s">SAVE 車商系統</div></div>
+      <div class="sb-sec">標單</div>
+      <div class="ni on" onclick="gd('bid',this)"><i class="ti ti-inbox" aria-hidden="true"></i>待投標標單<span class="ba">2</span></div>
+      <div class="ni" onclick="gd('mybids',this)"><i class="ti ti-list-check" aria-hidden="true"></i>已投標案件</div>
+      <div class="sb-sec">勘車</div>
+      <div class="ni" onclick="gd('dsurvey',this)"><i class="ti ti-map-pin" aria-hidden="true"></i>勘車管理</div>
+      <div class="sb-sec">設定</div>
+      <div class="ni" onclick="gd('pref',this)"><i class="ti ti-settings" aria-hidden="true"></i>收購偏好設定</div>
+    </div>
+
+    <div class="main">
+
+      <!-- 進件管理 -->
+      <div id="p-intake" class="pg on">
+        <div class="tb"><div class="tb-t">進件管理</div><div class="tb-r"><span class="pill p-amb">待聯繫 4</span><button class="bp" onclick="ga('iedit',null)">+ 新增進件</button></div></div>
+        <div class="ct">
+          <div class="stats s5">
+            <div class="sc"><div class="sc-l">本月進件</div><div class="sc-v">24</div></div>
+            <div class="sc"><div class="sc-l">SAVE 進件</div><div class="sc-v" style="color:#185FA5">14</div></div>
+            <div class="sc"><div class="sc-l">自行收購</div><div class="sc-v" style="color:#0F6E56">10</div></div>
+            <div class="sc"><div class="sc-l">待建標單</div><div class="sc-v" style="color:#BA7517">6</div></div>
+            <div class="sc"><div class="sc-l">已建標單</div><div class="sc-v">14</div></div>
+          </div>
+          <div class="nt nt-tel">🕕 每日 18:00 自動分派前 24 小時 SAVE 來源進件給對應車商。人工派案可點「建標單（分派車商）」立即執行。</div>
+          <div class="fr">
+            <input type="date" style="width:108px"><span style="color:var(--color-text-tertiary)">～</span><input type="date" style="width:108px">
+            <select><option>全部來源</option><option>SAVE</option><option>uTagGo</option><option>格上官網</option><option>電話</option></select>
+            <select><option>全部狀態</option><option>待聯繫</option><option>待查定</option><option>查定完成</option><option>待派案</option><option>已派案</option></select>
+            <button class="bp">查詢</button>
+          </div>
+          <div class="tw">
+            <table>
+              <thead><tr><th>進件編號</th><th>來源</th><th>日期</th><th>姓名</th><th>手機</th><th>縣市</th><th>車型</th><th>查定</th><th>狀態</th><th>操作</th></tr></thead>
+              <tbody>
+                <tr><td>IN-001</td><td><span class="src-s">SAVE</span></td><td>2026-06-10</td><td>王小明</td><td>0912-345-678</td><td>台北市</td><td>Toyota Camry 2020</td><td><span class="pill p-tel">查定</span></td><td><span class="pill p-grn">查定完成</span></td><td><div class="ops"><button onclick="ga('iedit',null)">編輯</button><button class="bgt" onclick="ga('cases',null)">建標單</button></div></td></tr>
+                <tr><td>IN-002</td><td><span class="src-s">SAVE</span></td><td>2026-06-10</td><td>陳美玲</td><td>0922-345-678</td><td>新北市</td><td>Honda CR-V 2019</td><td><span class="pill p-tel">查定</span></td><td><span class="pill p-amb">待查定</span></td><td><div class="ops"><button onclick="ga('iedit',null)">編輯</button></div></td></tr>
+                <tr><td>IN-003</td><td><span class="src-s">SAVE</span></td><td>2026-06-09</td><td>李建宏</td><td>0933-456-789</td><td>桃園市</td><td>BMW 320i 2018</td><td><span class="pill p-gry">不查定</span></td><td><span class="pill p-blu">待派案</span></td><td><div class="ops"><button onclick="ga('iedit',null)">編輯</button><button class="bgt" onclick="ga('cases',null)">建標單</button></div></td></tr>
+                <tr><td>IN-004</td><td><span class="src-u">uTagGo</span></td><td>2026-06-09</td><td>黃美玲</td><td>0933-887-221</td><td>台中市</td><td>Honda CRV 2021</td><td><span class="pill p-gry">—</span></td><td><span class="pill p-amb">待聯繫</span></td><td><div class="ops"><button onclick="ga('iedit',null)">編輯</button></div></td></tr>
+                <tr><td>IN-005</td><td><span class="src-w">格上官網</span></td><td>2026-06-08</td><td>張雅惠</td><td>0966-789-012</td><td>高雄市</td><td>Mazda CX-5 2021</td><td><span class="pill p-gry">—</span></td><td><span class="pill p-tel">處理中</span></td><td><div class="ops"><button onclick="ga('iedit',null)">編輯</button></div></td></tr>
+              </tbody>
+            </table>
+            <div class="pgr"><span>共 24 筆</span><div style="display:flex;gap:3px"><div class="pgb on">1</div><div class="pgb">2</div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 進件編輯 -->
+      <div id="p-iedit" class="pg">
+        <div class="tb"><div class="tb-t">進件編輯</div><div class="tb-r"><button onclick="ga('intake',null)">取消</button><button class="bp">儲存</button></div></div>
+        <div class="ct">
+          <div class="blk"><div class="blk-t">基本資料</div>
+            <div class="gr g4" style="margin-bottom:8px">
+              <div class="fg"><div class="fl">來源 *</div><select class="fs" id="src-sel" onchange="onSrc()"><option value="SAVE">SAVE</option><option value="uTagGo">uTagGo</option><option value="web">格上官網</option><option value="tel">電話</option></select></div>
+              <div class="fg"><div class="fl">姓名 *</div><input class="fi" value="王小明"></div>
+              <div class="fg"><div class="fl">手機 *</div><input class="fi" value="0912-345-678"></div>
+              <div class="fg"><div class="fl">縣市</div><select class="fs"><option>台北市</option><option>新北市</option><option>台中市</option></select></div>
+            </div>
+            <div class="gr g4">
+              <div class="fg"><div class="fl">進件狀態</div><select class="fs"><option>待聯繫</option><option>待查定</option><option>查定完成</option><option>不查定</option></select></div>
+              <div class="fg"><div class="fl">ACC帳務系統</div><select class="fs"><option>否</option><option>是</option></select></div>
+              <div class="fg"><div class="fl">輸入方式</div><select class="fs"><option>平行輸入</option><option>系統導入</option></select></div>
+              <div class="fg"><div class="fl">備註</div><input class="fi" placeholder="備註說明"></div>
+            </div>
+          </div>
+          <div class="blk" id="save-sec">
+            <div class="blk-t">查定服務設定（SAVE 來源）</div>
+            <div class="fg" style="max-width:280px;margin-bottom:10px">
+              <div class="fl">客戶是否選擇查定服務 *</div>
+              <select class="fs" id="qtype" onchange="onQtype()"><option value="">請選擇</option><option value="yes">是 — 需查定</option><option value="no">否 — 直接競標</option></select>
+            </div>
+            <div id="qyes" style="display:none">
+              <div style="display:flex;gap:8px;align-items:flex-end;margin-bottom:10px;max-width:380px">
+                <div class="fg" style="flex:1"><div class="fl">車牌號碼 *</div><input class="fi" id="plate" placeholder="ABC-1234"></div>
+                <button class="bp" id="fbtn" onclick="doFetch()">抓取查定資料</button>
+              </div>
+              <div id="fres" style="display:none">
+                <div class="nt nt-tel">✓ 已成功抓取查定資料，請確認後繼續</div>
+                <div class="gr g3" style="max-width:440px;margin-bottom:10px">
+                  <div style="border:0.5px solid var(--color-border-tertiary);border-radius:5px;padding:7px 9px;background:#f5f7f9"><div style="font-size:10px;color:var(--color-text-tertiary);margin-bottom:2px">查定表</div><div style="font-size:11px;color:#0F6E56;font-weight:500">✓ 1 張</div></div>
+                  <div style="border:0.5px solid var(--color-border-tertiary);border-radius:5px;padding:7px 9px;background:#f5f7f9"><div style="font-size:10px;color:var(--color-text-tertiary);margin-bottom:2px">查定車輛照片</div><div style="font-size:11px;color:#0F6E56;font-weight:500">✓ 16 張</div></div>
+                  <div style="border:0.5px solid var(--color-border-tertiary);border-radius:5px;padding:7px 9px;background:#f5f7f9"><div style="font-size:10px;color:var(--color-text-tertiary);margin-bottom:2px">監理圖</div><div style="font-size:11px;color:#BA7517;font-weight:500">⏳ 抓取中</div></div>
+                </div>
+                <button class="bp" onclick="ga('cases',null)">確認資料 — 建立標單</button>
+              </div>
+            </div>
+            <div id="qno" style="display:none">
+              <div class="nt nt-amb">⚠️ 不查定模式：以車籍資料直接建標單，無需查定表。</div>
+              <button class="bp" onclick="ga('cases',null)">建標單（分派車商）</button>
+            </div>
+          </div>
+          <div class="blk" id="nonsave-sec" style="display:none">
+            <div class="blk-t">案件狀態管理（自行收購）</div>
+            <div class="nt nt-blu">ℹ️ 此來源為自行收購，不經車商競標，請直接更新案件進度。</div>
+            <div class="gr g3" style="margin-bottom:8px">
+              <div class="fg"><div class="fl">案件狀態</div><select class="fs"><option>待聯繫</option><option>聯繫中</option><option>已評估</option><option>協議中</option><option>已成交</option><option>未成交</option></select></div>
+              <div class="fg"><div class="fl">負責人員</div><select class="fs"><option>陳建宏</option><option>王怡婷</option></select></div>
+              <div class="fg"><div class="fl">成交金額</div><input class="fi" placeholder="$___,___"></div>
+            </div>
+          </div>
+          <div class="blk">
+            <div class="blk-t">車況資訊</div>
+            <div class="gr g4" style="margin-bottom:8px">
+              <div class="fg"><div class="fl">品牌 *</div><select class="fs"><option>Toyota</option><option>Honda</option><option>BMW</option><option>BENZ</option></select></div>
+              <div class="fg"><div class="fl">車型 *</div><input class="fi" value="Camry"></div>
+              <div class="fg"><div class="fl">年份 *</div><input class="fi" value="2020"></div>
+              <div class="fg"><div class="fl">里程數 *</div><input class="fi" value="65,000 km"></div>
+            </div>
+            <div class="gr g4">
+              <div class="fg"><div class="fl">顏色</div><input class="fi" value="銀灰"></div>
+              <div class="fg"><div class="fl">變速箱</div><select class="fs"><option>自排</option><option>手排</option></select></div>
+              <div class="fg"><div class="fl">排氣量</div><input class="fi" value="2500 cc"></div>
+              <div class="fg"><div class="fl">期望售價</div><input class="fi" placeholder="$___,___"></div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:flex-end;gap:7px;padding-top:8px;border-top:0.5px solid var(--color-border-tertiary)">
+            <button onclick="ga('intake',null)">取消</button><button class="bp">儲存</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 標單管理 -->
+      <div id="p-cases" class="pg">
+        <div class="tb"><div class="tb-t">標單管理</div><div class="tb-r"><span class="pill p-amb">截標待媒合 2</span><span class="pill p-blu">開標中 3</span></div></div>
+        <div class="ct">
+          <div class="fr">
+            <input type="date" style="width:108px"><span style="color:var(--color-text-tertiary)">～</span><input type="date" style="width:108px">
+            <select><option>全部狀態</option><option>開標中</option><option>截標待媒合</option><option>棄標</option><option>再媒合</option><option>勘車</option><option>結案</option></select>
+            <select><option>全部品牌</option><option>Toyota</option><option>Honda</option><option>BMW</option></select>
+            <button class="bp">查詢</button>
+          </div>
+          <div class="tw">
+            <table>
+              <thead><tr><th>案件編號</th><th>消費者</th><th>車型</th><th>查定</th><th>底標</th><th>回標數</th><th>最高出價</th><th>結標時間</th><th>狀態</th><th>操作</th></tr></thead>
+              <tbody>
+                <tr><td>SC-001</td><td>王小明</td><td>Toyota Camry 2020</td><td><span class="pill p-tel">查定</span></td><td>$420,000</td><td>6</td><td style="color:#0F6E56;font-weight:500">$452,000</td><td>06/10 18:00</td><td><span class="pill p-amb">截標待媒合</span></td><td><button class="bgt" onclick="ga('match',null)">媒合操作</button></td></tr>
+                <tr><td>SC-003</td><td>陳美玲</td><td>Honda CR-V 2019</td><td><span class="pill p-tel">查定</span></td><td>$380,000</td><td>4</td><td style="color:#0F6E56;font-weight:500">$398,000</td><td>06/09 18:00</td><td><span class="pill p-amb">截標待媒合</span></td><td><button class="bgt" onclick="ga('match',null)">媒合操作</button></td></tr>
+                <tr><td>SC-005</td><td>李建宏</td><td>BMW 320i 2018</td><td><span class="pill p-gry">不查定</span></td><td>$550,000</td><td>3</td><td>—</td><td>06/12 18:00</td><td><span class="pill p-blu">開標中</span></td><td><button>查看</button></td></tr>
+                <tr><td>SC-002</td><td>許雅婷</td><td>MAZDA CX-5 2020</td><td><span class="pill p-gry">不查定</span></td><td>$490,000</td><td>2</td><td style="color:#A32D2D">$480,000</td><td>06/08 18:00</td><td><span class="pill p-red">棄標</span></td><td><div class="ops"><button onclick="ga('match',null)">查看</button><button class="bpur" onclick="ga('rematch',null)">再媒合</button></div></td></tr>
+                <tr><td>SC-004</td><td>趙信雄</td><td>Prius 2017</td><td><span class="pill p-tel">查定</span></td><td>$350,000</td><td>5</td><td style="color:#0F6E56">$372,000</td><td>—</td><td><span class="pill p-tel">勘車安排</span></td><td><button onclick="ga('survey',null)">勘車管理</button></td></tr>
+              </tbody>
+            </table>
+            <div class="pgr"><span>共 14 筆</span><div style="display:flex;gap:3px"><div class="pgb on">1</div><div class="pgb">2</div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 標單媒合 -->
+      <div id="p-match" class="pg">
+        <div class="tb"><div class="tb-t">標單媒合 — SC-001</div><div class="tb-r"><span class="pill p-amb">截標待媒合</span><button onclick="ga('cases',null)">返回列表</button></div></div>
+        <div class="ct">
+          <div style="display:grid;grid-template-columns:1fr 190px;gap:12px">
+            <div>
+              <div class="sms"><div style="font-size:10px;font-weight:500;color:#185FA5;margin-bottom:4px">📱 消費者通知簡訊預覽</div>王小明您好，Toyota Camry 2020 最高出價 <strong>45.2萬</strong>，後續由服務專員聯繫確認。<div style="margin-top:7px;display:flex;gap:5px"><button class="bgt">確認發送簡訊</button><button>編輯文案</button></div></div>
+              <div style="font-size:11px;font-weight:500;margin-bottom:7px">車商出價排行</div>
+              <div class="br win"><div class="rk rk1">1</div><div class="bi"><div class="bn">永豐汽車 🏆</div><div class="bm">台北市 · 06/10 10:22</div></div><div style="text-align:right"><div class="bp2">$452,000</div><div style="font-size:10px;color:#0F6E56">媒合後 → $448,000</div></div><button class="bgt" style="margin-left:8px" onclick="alert('已發送得標通知給永豐汽車。\n其他車商不會收到通知。')">得標通知</button></div>
+              <div class="br"><div class="rk rk2">2</div><div class="bi"><div class="bn">信義車行</div><div class="bm">台北市</div></div><div class="bp2">$448,000</div><button style="margin-left:8px" onclick="alert('已發送得標通知給信義車行。')">得標通知</button></div>
+              <div class="br"><div class="rk rk2">3</div><div class="bi"><div class="bn">弘昌汽車</div><div class="bm">新北市</div></div><div class="bp2">$435,000</div><button style="margin-left:8px" onclick="alert('已發送得標通知給弘昌汽車。')">得標通知</button></div>
+              <div class="dv"></div>
+              <div style="display:flex;gap:8px;align-items:flex-end">
+                <div style="flex:1"><div style="font-size:11px;font-weight:500;margin-bottom:4px">最終媒合價格</div><input class="fi" value="$448,000" style="width:100%"></div>
+                <button class="bred" onclick="alert('已以「消費者不同意」結案。')">消費者不同意 — 結案</button>
+              </div>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:500;margin-bottom:6px">案件資訊</div>
+              <div class="ib"><div style="font-size:10px;color:var(--color-text-tertiary);margin-bottom:4px">Toyota Camry 2020 · 查定</div><div style="font-size:11px;margin-bottom:2px">里程：<strong>65,000 km</strong></div><div style="font-size:11px;margin-bottom:2px">底標：<strong>$420,000</strong></div><div style="font-size:11px">消費者：<strong>王小明</strong></div></div>
+              <div style="font-size:11px;font-weight:500;margin-bottom:6px">流程進度</div>
+              <div class="tc">
+                <div class="ti"><div class="td2 tdn"></div><div class="tln"></div><div><div class="tt">進件 / 查定</div><div class="tm">06/08</div></div></div>
+                <div class="ti"><div class="td2 tdn"></div><div class="tln"></div><div><div class="tt">建立標單</div><div class="tm">06/08</div></div></div>
+                <div class="ti"><div class="td2 tdn"></div><div class="tln"></div><div><div class="tt">車商投標</div><div class="tm">06/08–10</div></div></div>
+                <div class="ti"><div class="td2 tac"></div><div class="tln"></div><div><div class="tt" style="color:#185FA5">標單媒合</div></div></div>
+                <div class="ti"><div class="td2 tpd"></div><div class="tln"></div><div><div class="tt" style="color:var(--color-text-tertiary)">勘車安排</div></div></div>
+                <div class="ti"><div class="td2 tpd"></div><div><div class="tt" style="color:var(--color-text-tertiary)">結案</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 再媒合 -->
+      <div id="p-rematch" class="pg">
+        <div class="tb"><div class="tb-t">再媒合 — SC-002</div><div class="tb-r"><span class="pill p-pur">再媒合中</span><button onclick="ga('cases',null)">返回列表</button></div></div>
+        <div class="ct">
+          <div class="nt nt-red">⚠️ 原得標車商已棄標。保留原始出價記錄，請人工選擇車商重新發送得標通知。<strong>不通知其他未得標車商。</strong></div>
+          <div class="br aban"><div class="rk rk1">1</div><div class="bi"><div class="bn">豐盛汽車 <span class="pill p-red" style="font-size:9px">已棄標</span></div><div class="bm">原得標車商，不可再通知</div></div><div style="color:#A32D2D;font-weight:500">$495,000</div></div>
+          <div class="br"><div class="rk rk2">2</div><div class="bi"><div class="bn">新泰車業</div><div class="bm">桃園市 · 06/08 11:40</div></div><div class="bp2">$489,000</div><button class="bgt" style="margin-left:8px" onclick="alert('已重新發送得標通知給「新泰車業」。\n其他未得標車商不會收到通知。')">重新發送得標通知</button></div>
+          <div class="br"><div class="rk rk2">3</div><div class="bi"><div class="bn">台中永達車行</div><div class="bm">台中市 · 06/08 14:00</div></div><div class="bp2">$480,000</div><button style="margin-left:8px" onclick="alert('已重新發送得標通知給「台中永達車行」。\n其他未得標車商不會收到通知。')">重新發送得標通知</button></div>
+        </div>
+      </div>
+
+      <!-- 勘車管理 Admin -->
+      <div id="p-survey" class="pg">
+        <div class="tb"><div class="tb-t">勘車管理</div></div>
+        <div class="ct">
+          <div class="tw" style="margin-bottom:12px">
+            <table>
+              <thead><tr><th>案件編號</th><th>消費者</th><th>車型</th><th>得標車商</th><th>勘車日期</th><th>勘車地點</th><th>買賣契約書</th><th>過戶登記書</th><th>案件狀態</th><th>操作</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td>SC-004</td><td>趙信雄</td><td>Prius 2017</td><td>信義車行</td>
+                  <td style="color:#0F6E56;font-weight:500">06/14</td>
+                  <td style="color:#0F6E56">信義區松高路10號</td>
+                  <td><span class="pill p-tel">已上傳</span></td>
+                  <td><span class="pill p-amb">未上傳</span></td>
+                  <td><span class="pill p-tel">已成交</span></td>
+                  <td><div class="ops"><button onclick="toggleSCard()">查看 / 結案</button></div></td>
+                </tr>
+                <tr>
+                  <td>SC-008</td><td>陳大偉</td><td>BMW 520i 2018</td><td>弘昌汽車</td>
+                  <td style="color:var(--color-text-tertiary)">—</td>
+                  <td style="color:var(--color-text-tertiary)">—</td>
+                  <td><span class="pill p-gry">未上傳</span></td>
+                  <td><span class="pill p-gry">未上傳</span></td>
+                  <td><span class="pill p-amb">待車商填寫</span></td>
+                  <td><button>提醒車商</button></td>
+                </tr>
+                <tr>
+                  <td>SC-009</td><td>林惠玲</td><td>Corolla Cross 2022</td><td>永豐汽車</td>
+                  <td style="color:#0F6E56">06/12</td>
+                  <td style="color:#0F6E56">中山區南京東路</td>
+                  <td><span class="pill p-gry">未上傳</span></td>
+                  <td><span class="pill p-gry">未上傳</span></td>
+                  <td><span class="pill p-red">未成交</span></td>
+                  <td><div class="ops"><button onclick="toggleLoseCard()">查看戰敗</button></div></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- 已成交結案卡 -->
+          <div id="scard" style="display:none">
+            <div class="cc">
+              <div class="cc-h"><div><div class="cc-t">SC-004 · Prius 2017 · 趙信雄</div><div class="cc-m">信義車行 · 最終媒合價：$368,000</div></div><span class="pill p-tel">已成交</span></div>
+
+              <!-- 步驟流程 -->
+              <div class="step-bar">
+                <div class="step"><div class="step-dot done">✓</div><div class="step-label done">勘車填寫</div></div>
+                <div class="step"><div class="step-dot done">✓</div><div class="step-label done">買賣契約書</div></div>
+                <div class="step"><div class="step-dot active">3</div><div class="step-label active">過戶登記書</div></div>
+                <div class="step"><div class="step-dot">4</div><div class="step-label">結案送出</div></div>
+              </div>
+
+              <!-- 勘車資料 (readonly) -->
+              <div class="gr g2" style="max-width:420px;margin-bottom:10px">
+                <div class="fg"><div class="fl">勘車日期</div><input class="fi" value="2026-06-14" readonly></div>
+                <div class="fg"><div class="fl">勘車地點</div><input class="fi" value="台北市信義區松高路10號" readonly></div>
+              </div>
+
+              <div class="dv"></div>
+              <!-- 買賣契約書 -->
+              <div style="font-size:11px;font-weight:500;margin-bottom:7px;color:var(--color-text-primary)">買賣契約書
+                <span class="pill p-tel" style="margin-left:6px">已上傳</span>
+              </div>
+              <div class="upload-done" style="max-width:400px;margin-bottom:10px">
+                <i class="ti ti-file-text" style="color:#0F6E56;font-size:18px" aria-hidden="true"></i>
+                <div class="upload-done-name">買賣契約書_趙信雄_20260614.pdf</div>
+                <div class="upload-done-time">06/14 上午 10:22</div>
+                <button style="font-size:10px;padding:2px 7px">重新上傳</button>
+              </div>
+
+              <div class="dv"></div>
+              <!-- 過戶登記書 -->
+              <div style="font-size:11px;font-weight:500;margin-bottom:7px;color:var(--color-text-primary)">過戶登記書
+                <span class="pill p-amb" style="margin-left:6px">待上傳</span>
+                <span style="font-size:10px;color:#A32D2D;margin-left:6px">※ 上傳後方可結案送出</span>
+              </div>
+              <div id="upload-reg-area" style="max-width:400px;margin-bottom:10px">
+                <div class="upload-box" onclick="fakeUploadReg()">
+                  <i class="ti ti-upload" style="font-size:20px;color:#1D9E75;margin-bottom:4px" aria-hidden="true"></i>
+                  <div class="upload-box-label">點擊上傳過戶登記書 (PDF)</div>
+                  <div class="upload-box-sub">或將檔案拖曳至此處</div>
+                </div>
+              </div>
+
+              <div style="display:flex;gap:8px">
+                <button id="submit-btn" disabled style="cursor:not-allowed;opacity:.4;background:#1D9E75;color:#fff;border-color:#1D9E75">送出結案</button>
+                <span id="submit-hint" style="font-size:10px;color:#A32D2D;align-self:center">請先上傳過戶登記書</span>
+                <button onclick="toggleSCard()" style="margin-left:auto">收起</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 未成交戰敗卡 (Admin查看) -->
+          <div id="losecard" style="display:none">
+            <div class="cc">
+              <div class="cc-h"><div><div class="cc-t">SC-009 · Corolla Cross 2022 · 林惠玲</div><div class="cc-m">永豐汽車 · 未成交</div></div><span class="pill p-red">未成交</span></div>
+              <div style="font-size:11px;font-weight:500;margin-bottom:6px">車商填寫之戰敗原因</div>
+              <div class="ib" style="margin-bottom:0">
+                <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px"><span style="background:#FCEBEB;color:#A32D2D;padding:1px 7px;border-radius:10px;font-size:10px;font-weight:500">選填原因</span><span style="font-size:11px;font-weight:500">實際車況落差大，價格談不攏</span></div>
+                <div style="font-size:11px;color:var(--color-text-secondary)">備註：消費者期望 $42 萬，車商評估最高 $38 萬，差距太大無法達成共識。</div>
+              </div>
+              <div style="display:flex;gap:7px;margin-top:10px"><button class="bred" onclick="alert('已確認結案')">確認結案（未成交）</button><button onclick="toggleLoseCard()">收起</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 車商管理 -->
+      <div id="p-dealer" class="pg">
+        <div class="tb"><div class="tb-t">車商管理</div><div class="tb-r"><button class="bp">+ 新增車商</button></div></div>
+        <div class="ct">
+          <div class="fr">
+            <input type="text" placeholder="車商名稱 / 電話 / Email" style="width:160px">
+            <select><option>全部地區</option><option>台北市</option><option>新北市</option><option>台中市</option></select>
+            <select><option>全部狀態</option><option>啟用</option><option>停用</option></select>
+            <button class="bp">查詢</button>
+          </div>
+          <div class="tw">
+            <table>
+              <thead><tr><th>車商名稱</th><th>聯絡人</th><th>電話</th><th>Email</th><th>地區</th><th>品牌偏好</th><th>本月出價</th><th>評分</th><th>狀態</th><th>操作</th></tr></thead>
+              <tbody>
+                <tr><td style="font-weight:500">永豐汽車</td><td>張經理</td><td>02-2345-6789</td><td>yongfeng@cars.tw</td><td>台北市</td><td><span class="pill p-blu">Toyota</span> <span class="pill p-blu">Honda</span></td><td>23</td><td style="color:#0F6E56">★ 4.8</td><td><span class="pill p-tel">啟用</span></td><td><div class="ops"><button>編輯</button><button>偏好</button></div></td></tr>
+                <tr><td style="font-weight:500">信義車行</td><td>王老闆</td><td>02-8765-4321</td><td>xinyi@dealer.com</td><td>台北市</td><td><span class="pill p-blu">BMW</span></td><td>17</td><td style="color:#0F6E56">★ 4.6</td><td><span class="pill p-tel">啟用</span></td><td><div class="ops"><button>編輯</button><button>偏好</button></div></td></tr>
+                <tr><td style="font-weight:500">弘昌汽車</td><td>陳弘昌</td><td>02-3456-7890</td><td>hongchang@auto.tw</td><td>新北市</td><td><span class="pill p-blu">BENZ</span></td><td>19</td><td style="color:#0F6E56">★ 4.7</td><td><span class="pill p-tel">啟用</span></td><td><div class="ops"><button>編輯</button><button>偏好</button></div></td></tr>
+                <tr><td style="font-weight:500">大眾汽車</td><td>林主任</td><td>03-1234-5678</td><td>dajung@cars.tw</td><td>桃園市</td><td><span class="pill p-gry">全品牌</span></td><td>0</td><td style="color:var(--color-text-tertiary)">—</td><td><span class="pill p-gry">停用</span></td><td><div class="ops"><button>編輯</button><button class="bgt" style="font-size:10px;padding:2px 7px">重新啟用</button></div></td></tr>
+              </tbody>
+            </table>
+            <div class="pgr"><span>共 18 筆</span><div style="display:flex;gap:3px"><div class="pgb on">1</div><div class="pgb">2</div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 結案報表 -->
+      <div id="p-report" class="pg">
+        <div class="tb"><div class="tb-t">結案報表</div><div class="tb-r"><button>匯出 Excel</button></div></div>
+        <div class="ct">
+          <div class="fr">
+            <input type="date" style="width:108px"><span style="color:var(--color-text-tertiary)">～</span><input type="date" style="width:108px">
+            <select><option>全部來源</option><option>SAVE</option><option>uTagGo</option><option>格上官網</option></select>
+            <select><option>全部狀態</option><option>已成交</option><option>未成交</option></select>
+            <button class="bp">查詢</button>
+          </div>
+          <div class="stats s4">
+            <div class="sc"><div class="sc-l">查詢期間進件</div><div class="sc-v">87</div></div>
+            <div class="sc"><div class="sc-l">成交件數</div><div class="sc-v" style="color:#0F6E56">59</div></div>
+            <div class="sc"><div class="sc-l">成交率</div><div class="sc-v" style="color:#0F6E56">67.8%</div></div>
+            <div class="sc"><div class="sc-l">平均成交價</div><div class="sc-v">$43萬</div></div>
+          </div>
+          <div class="tw">
+            <table>
+              <thead><tr><th>案件編號</th><th>來源</th><th>消費者</th><th>車型</th><th>里程</th><th>最終媒合</th><th>實際成交</th><th>成交車商</th><th>結案日</th><th>狀態</th></tr></thead>
+              <tbody>
+                <tr><td>SC-004</td><td><span class="src-s">SAVE</span></td><td>趙信雄</td><td>Prius 2017</td><td>88,000km</td><td>$368,000</td><td style="color:#0F6E56;font-weight:500">$365,000</td><td>信義車行</td><td>06/14</td><td><span class="pill p-tel">已成交</span></td></tr>
+                <tr><td>SC-006</td><td><span class="src-u">uTagGo</span></td><td>林志豪</td><td>Toyota Altis 2019</td><td>72,000km</td><td>—</td><td style="color:#0F6E56;font-weight:500">$289,000</td><td>（自行收購）</td><td>06/06</td><td><span class="pill p-tel">已成交</span></td></tr>
+                <tr><td>SC-009</td><td><span class="src-s">SAVE</span></td><td>林惠玲</td><td>Corolla Cross 2022</td><td>33,000km</td><td>—</td><td>—</td><td>永豐汽車</td><td>06/12</td><td><span class="pill p-red">未成交</span></td></tr>
+              </tbody>
+            </table>
+            <div class="pgr"><span>共 87 筆</span><div style="display:flex;gap:3px"><div class="pgb on">1</div><div class="pgb">2</div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== 車商後台頁面 ===== -->
+
+      <!-- 車商：待投標 -->
+      <div id="p-bid" class="pg">
+        <div class="tb"><div class="tb-t">待投標標單</div><div class="tb-r"><span class="pill p-amb">2 筆待回標</span></div></div>
+        <div class="d-ct">
+          <div class="nt nt-amb">⚠️ 收到標單通知後請於 24 小時內回標，送出後不可修改。</div>
+          <div class="d-cc">
+            <div class="cc-h"><div><div class="cc-t">Honda CR-V 2019</div><div class="cc-m">SC-003 · 結標：06/11 18:00</div></div><span class="pill p-amb">待回標</span></div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:8px">
+              <div><div style="font-size:10px;color:var(--color-text-tertiary)">里程</div><div style="font-size:11px;font-weight:500">78,000 km</div></div>
+              <div><div style="font-size:10px;color:var(--color-text-tertiary)">年份</div><div style="font-size:11px;font-weight:500">2019</div></div>
+              <div><div style="font-size:10px;color:var(--color-text-tertiary)">查定</div><div style="font-size:11px;font-weight:500">已查定</div></div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-bottom:9px">
+              <div class="ph has" style="height:42px;font-size:9px">📷 車頭</div>
+              <div class="ph has" style="height:42px;font-size:9px">📋 查定表</div>
+              <div class="ph has" style="height:42px;font-size:9px">🗺 監理圖</div>
+              <div class="ph has" style="height:42px;font-size:9px">📷 左前</div>
+            </div>
+            <div style="display:flex;gap:7px"><input class="fi" style="flex:1" placeholder="輸入收購價格（送出後不可修改）"><button class="bgt">送出回標</button></div>
+          </div>
+          <div class="d-cc">
+            <div class="cc-h"><div><div class="cc-t">Toyota Camry 2020</div><div class="cc-m">SC-001 · 結標：06/12 18:00</div></div><span class="pill p-amb">待回標</span></div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:8px">
+              <div><div style="font-size:10px;color:var(--color-text-tertiary)">里程</div><div style="font-size:11px;font-weight:500">65,000 km</div></div>
+              <div><div style="font-size:10px;color:var(--color-text-tertiary)">年份</div><div style="font-size:11px;font-weight:500">2020</div></div>
+              <div><div style="font-size:10px;color:var(--color-text-tertiary)">查定</div><div style="font-size:11px;font-weight:500">已查定</div></div>
+            </div>
+            <div style="display:flex;gap:7px"><input class="fi" style="flex:1" placeholder="輸入收購價格（送出後不可修改）"><button class="bgt">送出回標</button></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 車商：已投標 -->
+      <div id="p-mybids" class="pg">
+        <div class="tb"><div class="tb-t">已投標案件</div></div>
+        <div class="d-ct">
+          <div style="font-size:11px;font-weight:500;margin-bottom:7px;color:#085041">已得標</div>
+          <div class="d-cc win">
+            <div class="cc-h"><div><div class="cc-t">Honda CR-V 2019</div><div class="cc-m">SC-003 · 得標通知：06/10 09:00</div></div><span class="pill p-tel">已得標</span></div>
+            <div class="ib"><div style="font-size:10px;font-weight:500;margin-bottom:5px;color:#085041">消費者聯絡資訊（得標後解鎖）</div><div style="font-size:11px;margin-bottom:2px">姓名：<strong>陳美玲</strong></div><div style="font-size:11px;margin-bottom:2px">電話：<span style="color:#185FA5">0922-345-678</span></div><div style="font-size:11px">最終媒合價：<span style="color:#0F6E56;font-weight:500">$395,000</span></div></div>
+            <div style="display:flex;gap:6px"><button class="bgt" onclick="gd('dsurvey',null)">安排勘車</button><button class="bred" onclick="alert('已送出棄標通知，Admin 將安排再媒合。')">棄標</button></div>
+          </div>
+          <div style="font-size:11px;font-weight:500;margin:10px 0 7px;color:#085041">未得標</div>
+          <div class="d-cc gray">
+            <div class="cc-h"><div><div class="cc-t">Toyota Camry 2020</div><div class="cc-m">SC-001 · 結標：06/09 18:00</div></div><span class="pill p-gry">未得標</span></div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:7px"><div><div style="font-size:10px;color:var(--color-text-tertiary)">我的出價</div><div style="font-size:11px;font-weight:500">$438,000</div></div><div><div style="font-size:10px;color:var(--color-text-tertiary)">消費者</div><div style="font-size:11px;color:var(--color-text-tertiary)">得標後解鎖</div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 車商：勘車管理 -->
+      <div id="p-dsurvey" class="pg">
+        <div class="tb"><div class="tb-t">勘車管理</div><div class="tb-r"><span style="font-size:11px;color:#085041;font-weight:500">可先暫存，確認後再送出結案</span></div></div>
+        <div class="d-ct">
+          <div class="d-cc">
+            <div class="cc-h"><div><div class="cc-t">Honda CR-V 2019</div><div class="cc-m">SC-003 · 最終媒合價：$395,000</div></div><span class="pill p-blu">勘車中</span></div>
+
+            <!-- 步驟流程 -->
+            <div class="step-bar">
+              <div class="step"><div class="step-dot done">✓</div><div class="step-label done">勘車資訊</div></div>
+              <div class="step"><div class="step-dot active">2</div><div class="step-label active">結案回報</div></div>
+              <div class="step"><div class="step-dot">3</div><div class="step-label">Admin 確認</div></div>
+            </div>
+
+            <div class="d-blk"><div class="d-blk-t">勘車資訊填寫</div>
+              <div class="gr g2" style="max-width:420px;margin-bottom:8px">
+                <div class="fg"><div class="fl">勘車日期 *</div><input class="fi" type="date" value="2026-06-14"></div>
+                <div class="fg"><div class="fl">勘車地點 *</div><input class="fi" placeholder="詳細地址"></div>
+              </div>
+              <div class="fg" style="max-width:520px;margin-bottom:9px"><div class="fl">備註（車況說明）</div><textarea class="fi" rows="2" style="resize:none" placeholder="輸入備註…"></textarea></div>
+              <button onclick="alert('已儲存勘車資訊，尚未送出結案')">暫存勘車資訊</button>
+            </div>
+
+            <div class="d-blk"><div class="d-blk-t">結案回報</div>
+              <div class="gr g2" style="max-width:420px;margin-bottom:10px">
+                <div class="fg"><div class="fl">實際成交金額</div><input class="fi" id="deal-price" placeholder="$___,___"></div>
+                <div class="fg"><div class="fl">案件狀態 *</div>
+                  <select class="fs" id="deal-status" onchange="onDealStatus()">
+                    <option value="">請選擇</option>
+                    <option value="done">已成交</option>
+                    <option value="fail">未成交</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- 未成交：戰敗原因 -->
+              <div id="lose-sec" style="display:none">
+                <div style="font-size:11px;font-weight:500;margin-bottom:7px;color:#085041">戰敗原因 * <span style="font-size:10px;color:#A32D2D;font-weight:400">（必填，結案前請完整填寫）</span></div>
+                <div class="radio-list" id="lose-list">
+                  <label class="radio-item" onclick="selLose(this)"><input type="radio" name="lose" value="1"><div class="radio-item-label">實際車況落差大，價格談不攏</div></label>
+                  <label class="radio-item" onclick="selLose(this)"><input type="radio" name="lose" value="2"><div class="radio-item-label">車況重大瑕疵，風險高拒收</div></label>
+                  <label class="radio-item" onclick="selLose(this)"><input type="radio" name="lose" value="3"><div class="radio-item-label">欠款或罰單未結清，無法過戶</div></label>
+                  <label class="radio-item" onclick="selLose(this)"><input type="radio" name="lose" value="4"><div class="radio-item-label">其他原因</div></label>
+                </div>
+                <div id="lose-other" style="display:none;margin-top:7px">
+                  <div class="fg" style="max-width:460px"><div class="fl">請說明其他原因 *</div><textarea class="fi" rows="2" style="resize:none" placeholder="請輸入說明…"></textarea></div>
+                </div>
+              </div>
+
+            </div>
+
+            <div style="display:flex;gap:8px;align-items:center">
+              <button id="d-submit-btn" class="bgt" style="opacity:.4;cursor:not-allowed" disabled onclick="checkSubmit()">送出結案</button>
+              <span id="d-submit-hint" style="font-size:10px;color:#A32D2D">請先填寫案件狀態</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 車商：偏好設定 -->
+      <div id="p-pref" class="pg">
+        <div class="tb"><div class="tb-t">收購偏好設定</div><div class="tb-r"><button class="bp">儲存設定</button></div></div>
+        <div class="d-ct">
+          <div class="nt nt-tel">ℹ️ 設定後 Admin 將依偏好自動將符合條件的標單派發至您的帳號。</div>
+          <div class="d-blk"><div class="d-blk-t">地區設定（最多 3 個）</div>
+            <div class="gr g3" style="max-width:440px">
+              <div class="fg"><div class="fl">地區 1</div><select class="fs"><option>台北市</option></select></div>
+              <div class="fg"><div class="fl">地區 2</div><select class="fs"><option>新北市</option></select></div>
+              <div class="fg"><div class="fl">地區 3</div><select class="fs"><option>（未設定）</option></select></div>
+            </div>
+          </div>
+          <div class="d-blk"><div class="d-blk-t">車輛偏好</div>
+            <div class="gr g3" style="max-width:440px">
+              <div class="fg"><div class="fl">品牌 1</div><select class="fs"><option>Toyota</option></select></div>
+              <div class="fg"><div class="fl">品牌 2</div><select class="fs"><option>Honda</option></select></div>
+              <div class="fg"><div class="fl">品牌 3</div><select class="fs"><option>（未設定）</option></select></div>
+              <div class="fg"><div class="fl">年份（起）</div><input class="fi" value="2018"></div>
+              <div class="fg"><div class="fl">年份（迄）</div><input class="fi" value="2023"></div>
+              <div></div>
+              <div class="fg"><div class="fl">里程（起）km</div><input class="fi" value="30,000"></div>
+              <div class="fg"><div class="fl">里程（迄）km</div><input class="fi" value="100,000"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+var AP=['intake','iedit','cases','match','rematch','survey','dealer','report'];
+var DP=['bid','mybids','dsurvey','pref'];
+
+function switchRole(r,btn){
+  document.querySelectorAll('.rtab').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('sb-a').style.display=r==='admin'?'flex':'none';
+  document.getElementById('sb-d').style.display=r==='dealer'?'flex':'none';
+  AP.forEach(p=>{var e=document.getElementById('p-'+p);if(e)e.classList.remove('on')});
+  DP.forEach(p=>{var e=document.getElementById('p-'+p);if(e)e.classList.remove('on')});
+  document.querySelectorAll('.ni').forEach(n=>n.classList.remove('on'));
+  if(r==='admin'){document.getElementById('p-intake').classList.add('on');document.querySelectorAll('#sb-a .ni')[0].classList.add('on');}
+  else{document.getElementById('p-bid').classList.add('on');document.querySelectorAll('#sb-d .ni')[0].classList.add('on');}
+}
+
+function ga(id,el){
+  AP.forEach(p=>{var e=document.getElementById('p-'+p);if(e)e.classList.remove('on')});
+  var t=document.getElementById('p-'+id);if(t)t.classList.add('on');
+  document.querySelectorAll('#sb-a .ni').forEach(n=>n.classList.remove('on'));
+  var m={intake:0,iedit:1,cases:2,match:3,rematch:4,survey:5,dealer:6,report:7};
+  var ni=document.querySelectorAll('#sb-a .ni');
+  if(m[id]!==undefined&&ni[m[id]])ni[m[id]].classList.add('on');
+  if(el)el.classList.add('on');
+}
+
+function gd(id,el){
+  DP.forEach(p=>{var e=document.getElementById('p-'+p);if(e)e.classList.remove('on')});
+  var t=document.getElementById('p-'+id);if(t)t.classList.add('on');
+  document.querySelectorAll('#sb-d .ni').forEach(n=>n.classList.remove('on'));
+  var m={bid:0,mybids:1,dsurvey:2,pref:3};
+  var ni=document.querySelectorAll('#sb-d .ni');
+  if(m[id]!==undefined&&ni[m[id]])ni[m[id]].classList.add('on');
+  if(el)el.classList.add('on');
+}
+
+function onSrc(){
+  var v=document.getElementById('src-sel').value;
+  var ss=document.getElementById('save-sec');var ns=document.getElementById('nonsave-sec');
+  if(ss)ss.style.display=v==='SAVE'?'block':'none';
+  if(ns)ns.style.display=v==='SAVE'?'none':'block';
+  if(v!=='SAVE'){
+    var qt=document.getElementById('qtype');if(qt)qt.value='';
+    ['qyes','qno','fres'].forEach(function(id){var e=document.getElementById(id);if(e)e.style.display='none';});
+  }
+}
+
+function onQtype(){
+  var v=document.getElementById('qtype').value;
+  var qy=document.getElementById('qyes');var qn=document.getElementById('qno');var fr=document.getElementById('fres');
+  if(qy)qy.style.display=v==='yes'?'block':'none';
+  if(qn)qn.style.display=v==='no'?'block':'none';
+  if(fr)fr.style.display='none';
+  var fb=document.getElementById('fbtn');if(fb)fb.textContent='抓取查定資料';
+}
+
+function doFetch(){
+  var p=document.getElementById('plate');
+  if(!p||!p.value.trim()){alert('請先輸入車牌號碼');return;}
+  var btn=document.getElementById('fbtn');
+  btn.textContent='抓取中…';btn.disabled=true;
+  setTimeout(function(){btn.textContent='已抓取 ✓';btn.disabled=false;var fr=document.getElementById('fres');if(fr)fr.style.display='block';},1000);
+}
+
+function toggleSCard(){
+  var c=document.getElementById('scard');
+  if(c)c.style.display=c.style.display==='none'?'block':'none';
+}
+
+function toggleLoseCard(){
+  var c=document.getElementById('losecard');
+  if(c)c.style.display=c.style.display==='none'?'block':'none';
+}
+
+function fakeUploadReg(){
+  var area=document.getElementById('upload-reg-area');
+  area.innerHTML='<div class="upload-done" style="max-width:400px"><i class="ti ti-file-text" style="color:#0F6E56;font-size:18px" aria-hidden="true"></i><div class="upload-done-name">過戶登記書_趙信雄_20260614.pdf</div><div class="upload-done-time">剛剛上傳</div><button style="font-size:10px;padding:2px 7px" onclick="resetReg()">重新上傳</button></div>';
+  var btn=document.getElementById('submit-btn');
+  var hint=document.getElementById('submit-hint');
+  if(btn){btn.disabled=false;btn.style.opacity='1';btn.style.cursor='pointer';}
+  if(hint)hint.style.display='none';
+}
+
+function resetReg(){
+  var area=document.getElementById('upload-reg-area');
+  area.innerHTML='<div class="upload-box" onclick="fakeUploadReg()"><i class="ti ti-upload" style="font-size:20px;color:#1D9E75;margin-bottom:4px" aria-hidden="true"></i><div class="upload-box-label">點擊上傳過戶登記書 (PDF)</div><div class="upload-box-sub">或將檔案拖曳至此處</div></div>';
+  var btn=document.getElementById('submit-btn');var hint=document.getElementById('submit-hint');
+  if(btn){btn.disabled=true;btn.style.opacity='.4';btn.style.cursor='not-allowed';}
+  if(hint)hint.style.display='';
+}
+
+function onDealStatus(){
+  var v=document.getElementById('deal-status').value;
+  var ls=document.getElementById('lose-sec');
+  if(ls)ls.style.display=v==='fail'?'block':'none';
+  var lo=document.getElementById('lose-other');
+  if(lo)lo.style.display='none';
+  document.querySelectorAll('.radio-item').forEach(function(r){r.classList.remove('sel')});
+  checkSubmitState();
+}
+
+function selLose(el){
+  document.querySelectorAll('.radio-item').forEach(function(r){r.classList.remove('sel')});
+  el.classList.add('sel');
+  var v=el.querySelector('input').value;
+  var lo=document.getElementById('lose-other');
+  if(lo)lo.style.display=v==='4'?'block':'none';
+  checkSubmitState();
+}
+
+function checkSubmitState(){
+  var status=document.getElementById('deal-status').value;
+  var btn=document.getElementById('d-submit-btn');
+  var hint=document.getElementById('d-submit-hint');
+  var ok=false;
+  if(status==='done'){ok=true;if(hint)hint.textContent='';}
+  else if(status==='fail'){
+    var sel=document.querySelector('.radio-item.sel');
+    if(sel){ok=true;if(hint)hint.textContent='';}
+    else{if(hint)hint.textContent='請選擇戰敗原因';}
+  } else {if(hint)hint.textContent='請先填寫案件狀態';}
+  if(btn){btn.disabled=!ok;btn.style.opacity=ok?'1':'.4';btn.style.cursor=ok?'pointer':'not-allowed';}
+}
+
+function checkSubmit(){
+  var status=document.getElementById('deal-status').value;
+  if(status==='done'){alert('已送出結案（已成交），等待 Admin 確認。');}
+  else{var sel=document.querySelector('.radio-item.sel');if(sel){alert('已送出結案（未成交）\n戰敗原因：'+sel.querySelector('.radio-item-label').textContent);}}
+}
+</script>
